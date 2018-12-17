@@ -8,7 +8,7 @@ import Form from './components/Form/Form';
 import Rank from './components/Rank';
 import Facerecognition from './components/Facerecognition';
 
-const app = new Clarifai.App({apiKey: 'ApiKey'});
+const app = new Clarifai.App({apiKey: 'dd9df87516b1489bb5024b1c2e138943'});
 
 const particleParams = {
   particles: {
@@ -53,17 +53,13 @@ class App extends Component {
   onInputChange = (event) => {this.setState({input: event.target.value}); } 
 
   onButtonSubmit = () => {
-    this.setState(
-      {
-        imageUrl: this.state.input
-      },
-      () => {
-        app.models
-          .predict(Clarifai.FACE_DETECT_MODEL, {base64: this.state.imageUrl})
-          .then(response => this.displayFaceBox(this.calculateFaceLocation(response)))
-          .catch(err => console.log(err));
-      }
-    );
+   this.setState({ imageUrl: this.state.input });
+    app.models
+      .predict(Clarifai.FACE_DETECT_MODEL, this.state.input)
+      .then(response =>
+        this.displayFaceBox(this.calculateFaceLocation(response))
+      )
+      .catch(err => console.log(err));
   } 
 
 
